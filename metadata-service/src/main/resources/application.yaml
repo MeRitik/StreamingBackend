@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: metadata-service
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/youtube_metadata
+
+server:
+  port: 8081
+
