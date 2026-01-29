@@ -1,6 +1,7 @@
 package com.ritik.metadataservice.controller;
 
 import com.ritik.metadataservice.dtos.CreateVideoRequest;
+import com.ritik.metadataservice.dtos.UpdateVideoStatusRequest;
 import com.ritik.metadataservice.dtos.VideoResponse;
 import com.ritik.metadataservice.services.VideoService;
 import jakarta.validation.Valid;
@@ -41,4 +42,13 @@ public class VideoController {
     ) {
         return videoService.listByUploader(uploaderId, page, size);
     }
+
+    @PatchMapping("/{videoId}/status")
+    public VideoResponse updateStatus(
+            @PathVariable String videoId,
+            @Valid @RequestBody UpdateVideoStatusRequest req
+    ) {
+        return videoService.updateStatus(videoId, req.getStatus());
+    }
+
 }

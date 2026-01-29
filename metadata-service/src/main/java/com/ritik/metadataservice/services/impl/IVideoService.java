@@ -55,4 +55,13 @@ public class IVideoService implements VideoService {
         return videoRepository.findByUploaderIdOrderByCreatedAtDesc(uploaderId, PageRequest.of(page, size))
                 .map(VideoResponse::from);
     }
+
+    public VideoResponse updateStatus(String videoId, VideoStatus status) {
+        Video video = videoRepository.findById(videoId)
+                .orElseThrow(() -> new ResourceNotFoundException("video", "videoId", videoId));
+
+        video.setStatus(status);
+        video.setUpdatedAt(Instant.now());
+        return VideoResponse.from(videoRepository.save(video));
+    }
 }
