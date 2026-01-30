@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/uploads/videos")
 @RequiredArgsConstructor
-@CrossOrigin
 public class UploadController {
 
     private final UploadPresignService presignService;
