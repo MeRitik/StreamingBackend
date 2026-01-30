@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: upload-service
+
+server:
+  port: 8082
+
+app:
+  storage:
+    bucket: streaming-videos
+    raw-prefix: raw
+
+minio:
+  endpoint: http://localhost:9000
+  access-key: minioadmin
+  secret-key: minioadmin
+  region: us-east-1
+
+metadata:
+  base-url: http://localhost:8081
