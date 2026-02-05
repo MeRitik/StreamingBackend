@@ -61,6 +61,11 @@
             <groupId>software.amazon.awssdk</groupId>
             <artifactId>auth</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>apache-client</artifactId>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>

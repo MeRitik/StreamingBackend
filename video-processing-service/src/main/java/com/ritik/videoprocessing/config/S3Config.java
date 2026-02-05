@@ -8,12 +8,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.http.apache.ApacheHttpClient;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.S3Configuration;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 
 import java.net.URI;
+import java.time.Duration;
 
 @Configuration
 public class S3Config {
@@ -25,10 +27,20 @@ public class S3Config {
                 .region(Region.of(props.getRegion()))
                 .credentialsProvider(
                         StaticCredentialsProvider.create(
-                                AwsBasicCredentials.create(props.getAccessKey(), props.getSecretKey())
-                        )
+                                AwsBasicCredentials.create(
+                                        props.getAccessKey(),
+                                        props.getSecretKey()
+                                ))
                 )
-                .forcePathStyle(true)
+                .serviceConfiguration(S3Configuration.builder()
+                        .pathStyleAccessEnabled(true)
+                        .build()
+                )
+                .httpClientBuilder(
+                        ApacheHttpClient.builder()
+                                .connectionTimeout(Duration.ofSeconds(10))
+                                .socketTimeout(Duration.ofMinutes(5))
+                )
                 .build();
     }
 

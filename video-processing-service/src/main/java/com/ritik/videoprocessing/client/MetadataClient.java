@@ -17,13 +17,21 @@ public class MetadataClient {
     private String baseUrl;
 
     public void markReady(String videoId, String processedKey) {
-        String url = baseUrl + "/v1/api/videos/" + videoId + "/status";
+        String url = baseUrl + "/api/v1/videos/" + videoId + "/status";
 
         // TODO: Create endpoint like PATCH /v1/api/videos/{id}/processed
         // to store processedKey or url
         restClient.patch()
                 .uri(url)
                 .body(Map.of("status", "READY"))
+                .retrieve()
+                .toBodilessEntity();
+    }
+
+    public void markFailed(String videoId) {
+        restClient.patch()
+                .uri(baseUrl + "/api/v1/videos/" + videoId + "/status")
+                .body(Map.of("status", "FAILED"))
                 .retrieve()
                 .toBodilessEntity();
     }
